@@ -1,13 +1,13 @@
 import ReactPaginate from "react-paginate";
 import css from './Pagination.module.css'
 
-interface IPagination {
+interface Pagination {
     totalPages: number,
     currentPage: number,
     setCurrentPage: (selected: number) => void
 }
 
-export default function Pagination({ totalPages, currentPage, setCurrentPage }: IPagination) {
+export default function Pagination({ totalPages, currentPage, setCurrentPage }: Pagination) {
 
     if (totalPages <= 1) return null;
 
