@@ -15,7 +15,7 @@ interface FetchNoteProps {
 
 interface CreateNoteParams {
   title: string;
-  content: string;
+  content: string | null;
   tag: Tags;
 }
 
@@ -32,7 +32,7 @@ export async function fetchNotes({
   page,
   perPage = 12,
   search,
-}: FetchNoteProps) {
+}: FetchNoteProps): Promise<FetchNotesResponse> {
   try {
     const response = await axios.get<FetchNotesResponse>(url, {
       ...options,
@@ -46,25 +46,28 @@ export async function fetchNotes({
     return response.data;
   } catch (error) {
     console.log("TCL : fetchNotes : error:", error);
+    throw error;
   }
 }
 
-export async function createNote(newNote: CreateNoteParams) {
+export async function createNote(newNote: CreateNoteParams): Promise<Note> {
   try {
     const response = await axios.post<Note>(url, newNote, options);
 
     return response.data;
   } catch (error) {
     console.log("TCL : createNote : error:", error);
+    throw error;
   }
 }
 
-export async function deleteNote(NoteId: string) {
+export async function deleteNote(NoteId: string): Promise<Note> {
   try {
     const response = await axios.delete<Note>(`${url}/${NoteId}`, options);
 
     return response.data;
   } catch (error) {
     console.log("TCL : deleteNote : error:", error);
+    throw error;
   }
 }
